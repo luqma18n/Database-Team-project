@@ -1,0 +1,7 @@
+CHANGE THIS FILE TO .env WHEN DONE
+
+DB_HOST= host port, typically localhost
+DB_PORT= leave default, unless changed in pgadmin 5432
+DB_NAME=name of database
+DB_USER=username, should be postgres unless made different
+DB_PASSWORD=password, set up during pgadmin install

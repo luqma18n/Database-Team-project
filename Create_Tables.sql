@@ -98,7 +98,8 @@ CREATE TABLE SupplierProduct(
 CREATE TABLE StaffMember(
     StaffID INTEGER PRIMARY KEY,
     Name VARCHAR(20), 
-    Address VARCHAR(50),
+    Address INTEGER,
     Salary DECIMAL(10, 2),
     JobTitle VARCHAR(20)
+	FOREIGN KEY (Address) REFERENCES Address(AddressID)
 );
