@@ -8,9 +8,10 @@ from product_database import get_db_connection
 customer = Blueprint('customer', __name__)
 
 
-@customer.route('/search_product', methods=['GET'])
+@customer.route('/search_product', methods=['GET', 'POST'])
 def search_product():
-    product_name = request.args.get('product_name')
+    # product_name = request.args.get('product_name')
+    product_name = request.form.get('product_name')
     conn = get_db_connection()
     cursor = conn.cursor(cursor_factory=RealDictCursor)
     cursor.execute("SELECT * FROM Product WHERE Name LIKE %s", ('%' + product_name + '%',))
@@ -22,7 +23,7 @@ def search_product():
 
 @customer.route('/add_to_cart', methods=['POST'])
 def add_to_cart():
-    data = request.json
+    data = request.form
     customer_id = data['customer_id']
     product_id = data['product_id']
     quantity = data['quantity']
