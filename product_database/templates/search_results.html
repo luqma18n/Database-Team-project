@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1>Search Results</h1>
+    <p>Displaying search results for: <strong>{{ search_query }}</strong></p>
+    <div class="row">
+        {% for product in products %}
+            <div class="col-md-4">
+                <div class="product-container">
+                    <div class="product-title">{{ product.name }}</div>
+                    <div class="product-info"><strong>Category:</strong> {{ product.category }}</div>
+                    <div class="product-info"><strong>Type:</strong> {{ product.type }}</div>
+                    <div class="product-info"><strong>Brand:</strong> {{ product.brand }}</div>
+                    <div class="product-info"><strong>Size:</strong> {{ product.size }}</div>
+                    <div class="product-description">
+                        <strong>Description:</strong> {{ product.description }}
+                    </div>
+                    <div class="product-price">${{ product.price }}</div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

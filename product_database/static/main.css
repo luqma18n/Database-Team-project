@@ -1,0 +1,28 @@
+.product-container {
+    width: 300px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+}
+.product-title {
+    font-size: 1.5em;
+    margin-bottom: 8px;
+    text-align: center;
+}
+.product-info {
+    margin-bottom: 8px;
+}
+.product-info strong {
+    display: inline-block;
+    width: 100px;
+}
+.product-description {
+    margin-top: 16px;
+}
+.product-price {
+    margin-top: 8px;
+    font-size: 1.2em;
+    color: #007BFF;
+}

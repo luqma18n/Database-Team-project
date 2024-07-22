@@ -17,7 +17,8 @@ def search_product():
     products = cursor.fetchall()
     cursor.close()
     conn.close()
-    return jsonify(products)
+    # products = jsonify(products)
+    return render_template('search_results.html', products=products, title='Search Product', search_query=product_name)
 
 @customer.route('/add_to_cart', methods=['POST'])
 def add_to_cart():
