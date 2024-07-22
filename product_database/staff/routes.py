@@ -1,4 +1,4 @@
-from flask import render_template, request, Blueprint, jsonify, abort
+from flask import render_template, request, Blueprint, jsonify, abort, redirect, url_for, flash
 import psycopg2
 from psycopg2.extras import RealDictCursor
 import os
@@ -30,7 +30,8 @@ def add_product():
     conn.commit()
     cursor.close()
     conn.close()
-    return jsonify({"message": "Product added"})
+    flash("Product added", 'success')
+    return redirect(url_for('main.home'))
 
 @staff.route('/delete_product', methods=['DELETE'])
 def delete_product():
@@ -45,7 +46,8 @@ def delete_product():
     conn.commit()
     cursor.close()
     conn.close()
-    return jsonify({"message": "Product deleted"})
+    flash("Product deleted", 'success')
+    return redirect(url_for('main.home'))
 
 @staff.route('/modify_product', methods=['PUT'])
 def modify_product():
@@ -77,7 +79,8 @@ def modify_product():
     conn.commit()
     cursor.close()
     conn.close()
-    return jsonify({"message": "Product modified"})
+    flash("Product modified", 'success')
+    return redirect(url_for('main.home'))
 
 @staff.route('/add_stock', methods=['POST'])
 def add_stock():
@@ -99,4 +102,5 @@ def add_stock():
     conn.commit()
     cursor.close()
     conn.close()
-    return jsonify({"message": "Stock added"})
+    flash("Stock added", 'success')
+    return redirect(url_for('main.home'))

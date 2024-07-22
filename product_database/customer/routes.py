@@ -1,4 +1,4 @@
-from flask import render_template, request, Blueprint, jsonify, abort
+from flask import render_template, request, Blueprint, jsonify, abort, redirect, url_for, flash
 import psycopg2
 from psycopg2.extras import RealDictCursor
 import os
@@ -50,7 +50,8 @@ def add_to_cart():
     conn.commit()
     cursor.close()
     conn.close()
-    return jsonify({"message": "Product added to cart"})
+    flash("Product added to cart", 'success')
+    return redirect(url_for('main.home'))
 
 @customer.route('/place_order', methods=['POST'])
 def place_order():
@@ -67,7 +68,8 @@ def place_order():
     conn.commit()
     cursor.close()
     conn.close()
-    return jsonify({"message": "Order placed"})
+    flash("Order placed", 'success')
+    return redirect(url_for('main.home'))
 
 @customer.route('/add_credit_card', methods=['POST'])
 def add_credit_card():
@@ -86,7 +88,8 @@ def add_credit_card():
     conn.commit()
     cursor.close()
     conn.close()
-    return jsonify({"message": "Credit card added"})
+    flash("Credit card added", 'success')
+    return redirect(url_for('main.home'))
 
 @customer.route('/delete_credit_card', methods=['DELETE'])
 def delete_credit_card():
@@ -97,7 +100,8 @@ def delete_credit_card():
     conn.commit()
     cursor.close()
     conn.close()
-    return jsonify({"message": "Credit card deleted"})
+    flash("Credit card deleted", 'success')
+    return redirect(url_for('main.home'))
 
 @customer.route('/modify_credit_card', methods=['PUT'])
 def modify_credit_card():
@@ -120,7 +124,8 @@ def modify_credit_card():
     conn.commit()
     cursor.close()
     conn.close()
-    return jsonify({"message": "Credit card modified"})
+    flash("Credit card modified", 'success')
+    return redirect(url_for('main.home'))
 
 @customer.route('/add_address', methods=['POST'])
 def add_address():
@@ -141,7 +146,8 @@ def add_address():
     conn.commit()
     cursor.close()
     conn.close()
-    return jsonify({"message": "Address added"})
+    flash("Address added", 'success')
+    return redirect(url_for('main.home'))
 
 @customer.route('/delete_address', methods=['DELETE'])
 def delete_address():
@@ -152,7 +158,8 @@ def delete_address():
     conn.commit()
     cursor.close()
     conn.close()
-    return jsonify({"message": "Address deleted"})
+    flash("Address deleted", 'success')
+    return redirect(url_for('main.home'))
 
 @customer.route('/modify_address', methods=['PUT'])
 def modify_address():
@@ -179,4 +186,5 @@ def modify_address():
     conn.commit()
     cursor.close()
     conn.close()
-    return jsonify({"message": "Address modified"})
+    flash("Address modified", 'success')
+    return redirect(url_for('main.home'))

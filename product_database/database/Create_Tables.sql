@@ -100,6 +100,6 @@ CREATE TABLE StaffMember(
     Name VARCHAR(20), 
     Address INTEGER,
     Salary DECIMAL(10, 2),
-    JobTitle VARCHAR(20)
+    JobTitle VARCHAR(20),
 	FOREIGN KEY (Address) REFERENCES Address(AddressID)
 );
