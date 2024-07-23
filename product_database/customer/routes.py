@@ -1,5 +1,6 @@
-from flask import render_template, request, Blueprint, jsonify, abort, redirect, url_for, flash
+from flask import render_template, request, Blueprint, jsonify, abort, redirect, url_for, flash, make_response
 import psycopg2
+import json
 from psycopg2.extras import RealDictCursor
 import os
 from dotenv import load_dotenv
@@ -21,39 +22,68 @@ def search_product():
     # products = jsonify(products)
     return render_template('search_results.html', products=products, title='Search Product', search_query=product_name)
 
-@customer.route('/add_to_cart', methods=['POST'])
-def add_to_cart():
-    data = request.form
-    customer_id = data['customer_id']
-    product_id = data['product_id']
-    quantity = data['quantity']
-    conn = get_db_connection()
-    cursor = conn.cursor()
-    cursor.execute("""
-        SELECT OrderID FROM CustomerOrder 
-        WHERE CustomerID = %s AND Status = 'pending' LIMIT 1
-    """, (customer_id,))
-    order = cursor.fetchone()
-    if order is None:
-        cursor.execute("""
-            INSERT INTO CustomerOrder (CustomerID, OrderDate, Status)
-            VALUES (%s, NOW(), 'pending') RETURNING OrderID
-        """, (customer_id,))
-        order_id = cursor.fetchone()[0]
-    else:
-        order_id = order[0]
+@customer.route('/shopping_cart', methods=['GET'])
+def shopping_cart():
+    #conn = get_db_connection
+   # cursor = conn.cursor(cursor_factory=RealDictCursor)
+    cart = request.cookies.get('cart')
+    cartObject = json.loads(cart)
+    return render_template('shoppingcart.html',cart=cartObject)
 
-    cursor.execute("""
-        INSERT INTO OrderProduct (OrderID, ProductID, Quantity) 
-        VALUES (%s, %s, %s)
-        ON CONFLICT (OrderID, ProductID) 
-        DO UPDATE SET Quantity = OrderProduct.Quantity + EXCLUDED.Quantity
-    """, (order_id, product_id, quantity))
-    conn.commit()
-    cursor.close()
-    conn.close()
-    flash("Product added to cart", 'success')
-    return redirect(url_for('main.home'))
+@customer.route('/add_to_cart', methods=['GET','POST'])
+def add_to_cart():
+
+    product_id = request.form.get('product_id')
+    product_name = request.form.get('product_name')
+    quantity = request.form.get('quantity')
+    cartEntry = {
+        "product_id": product_id,
+        "product_name": product_name,
+        "quantity": quantity
+    }
+
+    cookie = request.cookies.get('cart')
+    cookieJson = []
+    if(cookie):
+        cookieJson = json.loads(cookie)
+        cookieJson["items"].append(cartEntry)
+    else:
+        cookieJson = {"items": [cartEntry]}
+
+    cookie = jsonify(cookieJson).get_data(as_text=True)
+    #Store in Cookie
+    response = make_response(redirect('/'))
+    response.set_cookie("cart", value=cookie)
+    return response
+    # conn = get_db_connection()
+    # cursor = conn.cursor()
+    # cursor.execute("""
+    #     SELECT OrderID FROM CustomerOrder 
+    #     WHERE CustomerID = %s AND Status = 'pending' LIMIT 1
+    # """, (customer_id,))
+    # order = cursor.fetchone()
+    # if order is None:
+    #     cursor.execute("""
+    #         INSERT INTO CustomerOrder (CustomerID, OrderDate, Status)
+    #         VALUES (%s, NOW(), 'pending') RETURNING OrderID
+    #     """, (customer_id,))
+    #     order_id = cursor.fetchone()[0]
+    # else:
+    #     order_id = order[0]
+
+    # cursor.execute("""
+    #     INSERT INTO OrderProduct (OrderID, ProductID, Quantity) 
+    #     VALUES (%s, %s, %s)
+    #     ON CONFLICT (OrderID, ProductID) 
+    #     DO UPDATE SET Quantity = OrderProduct.Quantity + EXCLUDED.Quantity
+    # """, (order_id, product_id, quantity))
+    # conn.commit()
+    # cursor.close()
+    # conn.close()
+    # flash("Product added to cart", 'success')
+    # return redirect(url_for('main.home'))
+
+    
 
 @customer.route('/place_order', methods=['POST'])
 def place_order():

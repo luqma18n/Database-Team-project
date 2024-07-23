@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1>Shopping Cart</h1>
+    {% if not staff %}
+        {% if cart %}
+        <table class="table">
+            <thead>
+                <th scope="col">ID</th>
+                <th scope="col">Item</th>
+                <th scope="col">Quantity</th>
+            </thead>
+            {% for cartItem in cart["items"] %}
+            <tr>
+                <td>{{ cartItem.product_id }}</td>
+                <td>{{ cartItem.product_name }}</td>
+                <td>{{ cartItem.quantity }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        <form action="{{ url_for('customer.search_product') }}" method="POST">
+            <input type="text" name="product_name" placeholder="Search for a product">
+            <button type="submit">Submit Order</button>
+        </form>
+        {% else %}
+        <p> Shopping Cart is Empty</p>
+        {% endif %}
+    {% endif %}
+{% endblock %}
