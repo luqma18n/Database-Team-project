@@ -32,6 +32,7 @@ def create_app():
     from product_database.customer.routes import customer
     from product_database.main.routes import main
 
+    app.secret_key = os.getenv('SECRET_KEY')
     app.register_blueprint(staff)
     app.register_blueprint(customer)
     app.register_blueprint(main)

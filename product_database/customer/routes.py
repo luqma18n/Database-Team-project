@@ -27,12 +27,14 @@ def shopping_cart():
     #conn = get_db_connection
    # cursor = conn.cursor(cursor_factory=RealDictCursor)
     cart = request.cookies.get('cart')
+    if not cart:
+        flash("Cart is empty", 'danger')
+        return redirect(request.referrer)
     cartObject = json.loads(cart)
     return render_template('shoppingcart.html',cart=cartObject)
 
 @customer.route('/add_to_cart', methods=['GET','POST'])
 def add_to_cart():
-
     product_id = request.form.get('product_id')
     product_name = request.form.get('product_name')
     quantity = request.form.get('quantity')
