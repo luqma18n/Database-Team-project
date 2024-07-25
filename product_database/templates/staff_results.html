@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1>Search Results</h1>
+    <p>Displaying search results for: <strong>{{ search_query }}</strong></p>
+    <div class="row">
+        {% for product in products %}
+            <div class="col-md-4">
+                <div class="product-container">
+                    <form action="{{ url_for('staff.modify_product') }}" method="POST" class="form-group">
+                        <div class="form-group">
+                            <label for="name">Product Name:</label>
+                            <input type="text" id="name" name="name" class="form-control" value="{{ product.name }}" required>
+                        </div>
+                        <div class="product-info">
+                            <label for="category_{{ product.productid }}">Category:</label>
+                            <input type="text" id="category_{{ product.productid }}" name="category" value="{{ product.category }}">
+                        </div>
+                        <div class="product-info">
+                            <label for="type_{{ product.productid }}">Type:</label>
+                            <input type="text" id="type_{{ product.productid }}" name="type" value="{{ product.type }}">
+                        </div>
+                        <div class="product-info">
+                            <label for="brand_{{ product.productid }}">Brand:</label>
+                            <input type="text" id="brand_{{ product.productid }}" name="brand" value="{{ product.brand }}">
+                        </div>
+                        <div class="product-info">
+                            <label for="size_{{ product.productid }}">Size:</label>
+                            <input type="text" id="size_{{ product.productid }}" name="size" value="{{ product.size }}">
+                        </div>
+                        <div class="product-description">
+                            <label for="description_{{ product.productid }}">Description:</label>
+                            <textarea id="description_{{ product.productid }}" name="description">{{ product.description }}</textarea>
+                        </div>
+                        <div class="product-price">
+                            <label for="price_{{ product.productid }}">Price:</label>
+                            <input type="text" id="price_{{ product.productid }}" name="price" value="{{ product.price }}">
+                        </div>
+                        <input type="hidden" name="product_id" value="{{ product.productid }}">
+                        <input type="hidden" name="product_name" value="{{ product.name }}">
+                        <!--<input type="hidden" name="customer_id" value="1"> {# Hardcoded customer ID for now #} //-->
+                        <div class="row">
+                            <div class="col-sm">
+                                <button type="submit" class="btn btn-primary">Edit Product</button>
+                                <a href="{{ url_for('staff.delete_product', product_id=product.productid) }}" class="btn btn-danger">Delete Product</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -11,5 +11,5 @@ main = Blueprint('main', __name__)
 @main.route('/home', methods=['GET'])
 def home():
     #staff = is_employee(1)
-    staff = False
+    staff = True
     return render_template('home.html', title='Home', staff=staff)
