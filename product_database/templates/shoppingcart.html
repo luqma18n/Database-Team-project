@@ -1,28 +1,37 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h1>Shopping Cart</h1>
-    {% if not staff %}
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Shopping Cart</h1>
         {% if cart %}
-        <table class="table">
-            <thead>
-                <th scope="col">ID</th>
-                <th scope="col">Item</th>
-                <th scope="col">Quantity</th>
-            </thead>
-            {% for cartItem in cart["items"] %}
-            <tr>
-                <td>{{ cartItem.product_id }}</td>
-                <td>{{ cartItem.product_name }}</td>
-                <td>{{ cartItem.quantity }}</td>
-            </tr>
-            {% endfor %}
-        </table>
-        <form action="{{ url_for('customer.search_product') }}" method="POST">
-            <input type="text" name="product_name" placeholder="Search for a product">
-            <button type="submit">Submit Order</button>
-        </form>
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Item</th>
+                        <th scope="col">Quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cartItem in cart["items"] %}
+                    <tr>
+                        <td>{{ cartItem.product_id }}</td>
+                        <td>{{ cartItem.product_name }}</td>
+                        <td>{{ cartItem.quantity }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="text-center mt-4">
+            <form action="{{ url_for('customer.search_product') }}" method="POST" class="form-group">
+                <button type="submit" class="btn btn-primary btn-lg">Submit Order</button>
+            </form>
+        </div>
         {% else %}
-        <p> Shopping Cart is Empty</p>
+        <div class="alert alert-warning text-center" role="alert">
+            Shopping Cart is Empty
+        </div>
         {% endif %}
-    {% endif %}
+    </div>
 {% endblock %}
