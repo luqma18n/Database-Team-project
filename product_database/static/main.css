@@ -26,3 +26,17 @@
     font-size: 1.2em;
     color: #007BFF;
 }
+
+.bg-dark {
+    background-color: #343A40;
+    color: #fff;
+}
+
+.bg-dark-blue {
+    background-color: #003c7b;
+    color: #fff;
+}
+
+.color-white {
+    color: #fff;
+}

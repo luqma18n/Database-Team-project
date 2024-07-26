@@ -24,8 +24,8 @@ def search_product():
 
 @customer.route('/shopping_cart', methods=['GET'])
 def shopping_cart():
-    #conn = get_db_connection
-   # cursor = conn.cursor(cursor_factory=RealDictCursor)
+    # conn = get_db_connection
+    # cursor = conn.cursor(cursor_factory=RealDictCursor)
     cart = request.cookies.get('cart')
     if not cart:
         flash("Cart is empty", 'danger')
@@ -84,8 +84,6 @@ def add_to_cart():
     # conn.close()
     # flash("Product added to cart", 'success')
     # return redirect(url_for('main.home'))
-
-    
 
 @customer.route('/place_order', methods=['POST'])
 def place_order():

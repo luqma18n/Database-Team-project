@@ -91,8 +91,10 @@ CREATE TABLE Stock (
     WarehouseID INTEGER, 
     Quantity INTEGER,
     FOREIGN KEY (ProductID) REFERENCES Product(ProductID) ON DELETE CASCADE,
-    FOREIGN KEY (WarehouseID) REFERENCES Warehouse(WarehouseID) ON DELETE CASCADE
+    FOREIGN KEY (WarehouseID) REFERENCES Warehouse(WarehouseID) ON DELETE CASCADE,
+    UNIQUE (ProductID, WarehouseID)
 );
+
 
 CREATE TABLE Supplier (
     SupplierID SERIAL PRIMARY KEY,

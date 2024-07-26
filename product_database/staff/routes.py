@@ -7,6 +7,7 @@ from product_database import get_db_connection, is_employee
 
 staff = Blueprint('staff', __name__)
 
+## DONE
 @staff.route('/view_product', methods=['GET', 'POST'])
 def view_product():
     # product_name = request.args.get('product_name')
@@ -20,6 +21,7 @@ def view_product():
     # products = jsonify(products)
     return render_template('staff_results.html', products=products, title='Search Product', search_query=product_name)
 
+## DONE
 @staff.route('/add_product', methods=['POST', 'GET'])
 def add_product():
     if request.method == 'POST':
@@ -48,6 +50,7 @@ def add_product():
     elif request.method == 'GET':
         return render_template('add_product.html', title='Add Product')
 
+## DONE
 @staff.route('/delete_product/<int:product_id>', methods=['POST', 'GET'])
 def delete_product(product_id):
     # staff_id = data['staff_id']
@@ -62,6 +65,7 @@ def delete_product(product_id):
     flash("Product deleted", 'success')
     return redirect(url_for('main.home'))
 
+## DONE
 @staff.route('/modify_product', methods=['POST'])
 def modify_product():
     data = request.form
@@ -95,12 +99,14 @@ def modify_product():
     flash("Product modified", 'success')
     return redirect(url_for('main.home'))
 
+## TODO: Implement this route
 @staff.route('/add_stock', methods=['POST'])
 def add_stock():
     data = request.form
-    staff_id = data['staff_id']
-    if not is_employee(staff_id):
-        abort(403, description="Access denied: Only employees can add stock.")
+    print("Form data received:", data)
+    # staff_id = data['staff_id']
+    # if not is_employee(staff_id):
+    #     abort(403, description="Access denied: Only employees can add stock.")
     product_id = data['product_id']
     warehouse_id = data['warehouse_id']
     quantity = data['quantity']

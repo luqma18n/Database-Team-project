@@ -1,24 +1,35 @@
 {% extends "layout.html" %}
 {% block content %}
     <div class="container mt-5">
-        <h1 class="text-center">Welcome to the Product Database</h1>
-        <p class="text-center">This is a simple product database application built with Flask.</p>
         <div class="row justify-content-center mt-4">
             <div class="col-md-6">
+                <a class="btn btn-primary" href="{{ url_for('main.set_status') }}">Toggle Status</a>
+                <br />
+                <br />
+                {# Staff Forms #}
                 {% if staff %}
+                    <h1>Staff Home</h1>
                     <form action="{{ url_for('staff.view_product') }}" method="POST" class="input-group">
                         <input type="text" name="product_name" class="form-control" placeholder="Search for a product">
                         <div class="input-group-append">
                             <button type="submit" class="btn btn-primary">Edit Product</button>
                         </div>
                     </form>
+                    <br />
+
+                    <a class="btn btn-primary" href="{{ url_for('staff.add_product') }}">Add Product</a>
+                {# Customer Forms #}
                 {% else %}
+                    <h1>Customer Home</h1>
                     <form action="{{ url_for('customer.search_product') }}" method="POST" class="input-group">
                         <input type="text" name="product_name" class="form-control" placeholder="Search for a product">
                         <div class="input-group-append">
                             <button type="submit" class="btn btn-primary">Search</button>
                         </div>
                     </form>
+                    <br />
+
+                    <a class="btn btn-primary" href="{{ url_for('customer.shopping_cart') }}">Shopping Cart</a>
                 {% endif %}
             </div>
         </div>

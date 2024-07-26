@@ -45,6 +45,14 @@
                             </div>
                         </div>
                     </form>
+                    <form action="{{ url_for('staff.add_stock') }}" method="POST" class="form-group">
+                        <input type="hidden" name="product_id" value="{{ product.productid }}">
+                        <label for="warehouse_id">Warehouse ID:</label>
+                        <input name="warehouse_id" type="number" class="form-control" placeholder="Warehouse" required>
+                        <label for="quantity">Quantity:</label>
+                        <input name="quantity" type="number" class="form-control" placeholder="Quantity" required>
+                        <button type="submit" class="btn btn-primary">Add Stock</button>
+                    </form>
                 </div>
             </div>
         {% endfor %}
