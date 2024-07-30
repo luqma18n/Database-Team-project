@@ -23,10 +23,10 @@ INSERT INTO Product (Name, Category, Type, Brand, Size, Description, Price) VALU
 ('Headphones', 'Accessories', 'Audio', 'BrandC', 'One size', 'Noise-cancelling headphones', 199.99);
 
 -- Insert test data into CreditCard table
-INSERT INTO CreditCard (CustomerID, CardNumber, ExpirationDate, SecurityCode, PaymentAddressID) VALUES 
-(1, '1111222233334444', '2025-12-31', '123', 1),
-(2, '5555666677778888', '2026-06-30', '456', 2),
-(3, '9999000011112222', '2024-09-15', '789', 3);
+INSERT INTO CreditCard (CustomerID, CreditCardID, CardNumber, ExpirationDate, SecurityCode, PaymentAddressID) VALUES 
+(1, 1, '1111222233334444', '2025-12-31', '123', 1),
+(2, 2, '5555666677778888', '2026-06-30', '456', 2),
+(3, 3, '9999000011112222', '2024-09-15', '789', 3);
 
 -- Insert test data into CustomerOrder table
 INSERT INTO CustomerOrder (CustomerID, OrderDate, Status, CreditCardID) VALUES 
