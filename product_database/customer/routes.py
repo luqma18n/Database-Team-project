@@ -103,13 +103,13 @@ def place_order():
     flash("Order placed", 'success')
     return redirect(url_for('main.home'))
 
-@customer.route('/credit_card', methods=['GET'])
-def credit_card():
+@customer.route('/credit_card/<int:card_id>', methods=['GET'])
+def credit_card(card_id):
     # product_name = request.args.get('product_name')
     conn = get_db_connection()
     cursor = conn.cursor(cursor_factory=RealDictCursor)
     # only view for customer 1 for now
-    cursor.execute("SELECT * FROM creditcard WHERE customerid = %s", (1,))
+    cursor.execute("SELECT * FROM creditcard WHERE customerid = %s", (card_id,))
     cards = cursor.fetchall()
     cursor.close()
     conn.close()
