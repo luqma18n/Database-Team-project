@@ -171,9 +171,22 @@ def modify_credit_card():
     flash("Credit card modified", 'success')
     return redirect(url_for('main.home'))
 
+@customer.route('/address', methods=['GET'])
+def address():
+    # product_name = request.args.get('product_name')
+    conn = get_db_connection()
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
+    # only view for customer 1 for now
+    cursor.execute("SELECT * FROM address WHERE customerid = %s", (1,))
+    addresses = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return render_template('address.html',addresses=addresses)
+
+
 @customer.route('/add_address', methods=['POST'])
 def add_address():
-    data = request.json
+    data = request.form
     customer_id = data['customer_id']
     address_line1 = data['address_line1']
     address_line2 = data['address_line2']
@@ -193,9 +206,9 @@ def add_address():
     flash("Address added", 'success')
     return redirect(url_for('main.home'))
 
-@customer.route('/delete_address', methods=['DELETE'])
-def delete_address():
-    address_id = request.args.get('address_id')
+@customer.route('/delete_address/<int:address_id>', methods=['POST', 'GET'])
+def delete_address(address_id):
+    #address_id = request.args.get('address_id')
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("DELETE FROM Address WHERE AddressID = %s", (address_id,))
@@ -205,9 +218,9 @@ def delete_address():
     flash("Address deleted", 'success')
     return redirect(url_for('main.home'))
 
-@customer.route('/modify_address', methods=['PUT'])
+@customer.route('/modify_address', methods=['POST'])
 def modify_address():
-    data = request.json
+    data = request.form
     address_id = data['address_id']
     new_address_line1 = data['new_address_line1']
     new_address_line2 = data['new_address_line2']
