@@ -121,10 +121,9 @@ def place_order():
     card_id = card_result[0]
 
     cursor.execute("""
-        UPDATE CustomerOrder
-        SET Status = 'placed', CreditCardID = %s, OrderDate = NOW()
-        WHERE CustomerID = %s AND Status = 'pending'
-    """, (card_id, customer_id))
+        INSERT INTO CustomerOrder (CustomerID, CreditCardID, Status, OrderDate)
+        VALUES (%s, %s, 'Placed', NOW())
+    """, (customer_id, card_id))
 
     conn.commit()
     cursor.close()
