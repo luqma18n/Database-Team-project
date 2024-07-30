@@ -128,9 +128,10 @@ def place_order():
     conn.commit()
     cursor.close()
     conn.close()
-
+    response = make_response(redirect(url_for('main.home')))
+    response.set_cookie('cart', '', expires=0)
     flash("Order placed", 'success')
-    return redirect(url_for('main.home'))
+    return response
 
 
 @customer.route('/credit_card/<int:card_id>', methods=['GET'])
