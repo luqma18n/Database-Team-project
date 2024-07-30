@@ -110,7 +110,7 @@ def credit_card():
     cursor = conn.cursor(cursor_factory=RealDictCursor)
     # only view for customer 1 for now
     cursor.execute("SELECT * FROM creditcard WHERE customerid = %s", (1,))
-    crads = cursor.fetchall()
+    cards = cursor.fetchall()
     cursor.close()
     conn.close()
     return render_template('creditcard.html',cards=cards)
