@@ -103,9 +103,21 @@ def place_order():
     flash("Order placed", 'success')
     return redirect(url_for('main.home'))
 
+@customer.route('/credit_card', methods=['GET'])
+def credit_card():
+    # product_name = request.args.get('product_name')
+    conn = get_db_connection()
+    cursor = conn.cursor(cursor_factory=RealDictCursor)
+    # only view for customer 1 for now
+    cursor.execute("SELECT * FROM creditcard WHERE customerid = %s", (1,))
+    crads = cursor.fetchall()
+    cursor.close()
+    conn.close()
+    return render_template('creditcard.html',cards=cards)
+
 @customer.route('/add_credit_card', methods=['POST'])
 def add_credit_card():
-    data = request.json
+    data = request.form
     customer_id = data['customer_id']
     card_number = data['card_number']
     expiration_date = data['expiration_date']
@@ -123,21 +135,21 @@ def add_credit_card():
     flash("Credit card added", 'success')
     return redirect(url_for('main.home'))
 
-@customer.route('/delete_credit_card', methods=['DELETE'])
-def delete_credit_card():
-    credit_card_id = request.args.get('credit_card_id')
+@customer.route('/delete_credit_card/<int:card_id>', methods=['POST', 'GET'])
+def delete_credit_card(card_id):
+    # credit_card_id = request.args.get('credit_card_id')
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("DELETE FROM CreditCard WHERE CreditCardID = %s", (credit_card_id,))
+    cursor.execute("DELETE FROM CreditCard WHERE CreditCardID = %s", (card_id,))
     conn.commit()
     cursor.close()
     conn.close()
     flash("Credit card deleted", 'success')
     return redirect(url_for('main.home'))
 
-@customer.route('/modify_credit_card', methods=['PUT'])
+@customer.route('/modify_credit_card', methods=['POST'])
 def modify_credit_card():
-    data = request.json
+    data = request.form
     credit_card_id = data['credit_card_id']
     new_card_number = data['new_card_number']
     new_expiration_date = data['new_expiration_date']
