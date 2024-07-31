@@ -1,0 +1,102 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Address</h1>
+        {% if addresses %}
+            {% for address in addresses %}
+                <div class="col-md-4">
+                    <div class="product-container">
+                        <form action="{{ url_for('customer.modify_address') }}" method="POST" class="form-group">
+                            <div class="product-info">
+                                <label for="">Customer Id:</label>
+                                <input type="text" id="" name="customer_id" value="{{ address.customerid }}">
+                            </div>
+                            <div class="product-info">
+                                <label for="">Address Line 1:</label>
+                                <input type="text" id="" name="new_address_line1" value="{{ address.addressline1 }}">
+                            </div>
+                            <div class="product-info">
+                                <label for="">Address Line 2:</label>
+                                <input type="text" id="" name="new_address_line2" value="{{ address.addressline2 }}">
+                            </div>
+                            <div class="product-info">
+                                <label for="">City: </label>
+                                <input type="text" id="" name="new_city" value="{{ address.city }}">
+                            </div>
+                            <div class="product-info">
+                                <label for="">State: </label>
+                                <input type="text" id="" name="new_state" value="{{ address.state}}">
+                            </div>
+                            <div class="product-info">
+                                <label for="">Zipcode: </label>
+                                <input type="text" id="" name="new_zip_code" value="{{ address.zipcode}}">
+                            </div>
+                            <div class="product-info">
+                                <label for="">Type: </label>
+                                <input type="text" id="" name="new_address_type" value="{{ address.addresstype}}">
+                            </div>
+                            <input type="hidden" name="address_id" value="{{ address.addressid }}">
+
+                            <div class="row">
+                                <div class="col-sm">
+                                    <button type="submit" class="btn btn-primary">Edit Address</button>
+                                    <a  href="{{ url_for('customer.delete_address', address_id=address.addressid) }}" class="btn btn-danger">Delete Address</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+        {%else%}
+            <div class="container mt-5">
+                <h1 class="text-center mb-4">Address</h1>
+                <div class="alert alert-warning text-center" role="alert">
+                    You did not add any address!
+            </div>
+        {% endif %}            
+
+            
+            <h1>Add New Address</h1>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="product-container">
+                        <form action="{{ url_for('customer.add_address') }}" method="POST" class="form-group">
+                            <div class="form-group">
+                                <label for="brand">Customer Id:</label>
+                                <input type="text" id="" name="customer_id" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="category">Address Line 1: </label>
+                                <input type="text" id="" name="address_line1" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="type">Address Line 2: </label>
+                                <input type="text" id="" name="address_line2" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="brand">City: </label>
+                                <input type="text" id="" name="city" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="brand">State: </label>
+                                <input type="text" id="" name="state" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="brand">Zipcode:</label>
+                                <input type="text" id="" name="zip_code" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="brand">Type: </label>
+                                <input type="text" id="" name="address_type" class="form-control" required>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm">
+                                    <button type="submit" class="btn btn-primary">Create Card</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            </div>
+{% endblock %}
