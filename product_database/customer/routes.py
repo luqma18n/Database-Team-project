@@ -208,13 +208,13 @@ def modify_credit_card():
     return redirect(url_for('main.home'))
 
 
-@customer.route('/address', methods=['GET'])
-def address():
+@customer.route('/address/<int:address_id>', methods=['GET'])
+def address(address_id):
     # product_name = request.args.get('product_name')
     conn = get_db_connection()
     cursor = conn.cursor(cursor_factory=RealDictCursor)
     # only view for customer 1 for now
-    cursor.execute("SELECT * FROM address WHERE customerid = %s", (1,))
+    cursor.execute("SELECT * FROM address WHERE customerid = %s", (address_id,))
     addresses = cursor.fetchall()
     cursor.close()
     conn.close()

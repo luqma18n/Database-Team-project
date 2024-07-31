@@ -28,7 +28,7 @@
                         </div>
                     </form>
                     <br />
-                    <a class="btn btn-primary" href="{{ url_for('customer.address', addresses=1) }}">Address</a>
+                    <a class="btn btn-primary" href="{{ url_for('customer.address', address_id=1) }}">Address</a>
                     <a class="btn btn-primary" href="{{ url_for('customer.credit_card', card_id=1) }}">Credit Card</a>
                     <a class="btn btn-primary" href="{{ url_for('customer.shopping_cart') }}">Shopping Cart</a>
                 {% endif %}
