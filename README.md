@@ -1,6 +1,17 @@
 # Database-Team-project
 
-Setup Steps:
+## Development Team
+
+- Nathan Grilliot
+- Derek Corniello
+- Long Nguyen
+- Luqman Sulaiman Said Al Hansi
+
+## About Product Database
+
+Our site runs on a Flask server, using PostgreSQL for the database. The front end is simple CSS/JS using Bootstrap. This app was created for Database Design and Development (CS4092) at the University of Cincinnati.
+
+## Setup Steps
 
 1. Create and start a database on pgadmin, take note of all login info
 
